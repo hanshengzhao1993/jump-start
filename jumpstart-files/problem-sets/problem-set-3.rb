@@ -2,6 +2,7 @@
 # Write a method that takes an array of numbers as input and uses #select to return an array only of even numbers
 
 def get_evens(array)
+  array.select{|x| x % 2 ==0}
 end
 
 puts "\nGet evens:\n" + "*" * 15 + "\n"
@@ -13,6 +14,7 @@ puts get_evens([1, 3, 5, 7, 9, 11]) == []
 # Write a method that takes an array of numbers as input and uses #reject to return an array of number that aren't odd
 
 def reject_odds(array)
+  array.reject{|x| x % 2 == 1}
 end
 
 puts "\nReject odds:\n" + "*" * 15 + "\n"
@@ -24,6 +26,7 @@ puts reject_odds([2, 4, 6, 8, 10]) == [2, 4, 6, 8, 10]
 # Write a method that uses #reduce to sum up the numbers in an array
 
 def array_sum(array)
+  array.length === 0 ? 0 : array.reduce(:+)
 end
 
 puts "\nArray sum:\n" + "*" * 15 + "\n"
@@ -36,6 +39,7 @@ puts array_sum([5, 5, 5, 5, 5]) == 25
 # This method should *not* modify the original array
 
 def calculate_doubles(array)
+  array.map{ |x| x* 2 }
 end
 
 puts "\nCalculate doubles:\n" + "*" * 15 + "\n"
@@ -49,6 +53,7 @@ puts doubled_array == [2, 4, 6, 8, 10]
 # This method *should* modify the original array
 
 def calculate_doubles!(array)
+  array.map!{|x| x*2}
 end
 
 puts "\nCalculate doubles!:\n" + "*" * 15 + "\n"
@@ -61,6 +66,12 @@ puts array == [2, 4, 6, 8, 10]
 # For example, [2, 9, 7] would return 23, since (2 * 0) + (9 * 1) + (7 * 2) = 0 + 9 + 14 = 23
 
 def array_sum_with_index(array)
+  ans = 0
+  array.each_with_index do |x, y|
+    ans = ans + (x * y)
+  end
+  ans 
+
 end
 
 puts "\nArray sum with index:\n" + "*" * 15 + "\n"
@@ -71,6 +82,7 @@ puts array_sum_with_index([0, 1, 2, 3]) == 14
 # the element with the maximum value, calling sort once.
 
 def my_max(array)
+  array.max
 end
 
 puts "\nMy max:\n" + "*" * 15 + "\n"
@@ -82,6 +94,7 @@ puts my_max([1, 4, 9, 19, 3]) == 19
 # the element with the minimum value, calling sort once.
 
 def my_min(array)
+  array.min
 end
 
 puts "\nMy min:\n" + "*" * 15 + "\n"
@@ -92,6 +105,8 @@ puts my_min([0, -2, -5, -5, 1]) == -5
 # Write a method that returns the third greatest element in an array
 
 def third_greatest(array)
+  array.sort!
+  array[-3]
 end
 
 puts "\nThird greatest:\n" + "*" * 15 + "\n"
@@ -102,6 +117,8 @@ puts third_greatest([5, 9, 3, 7, 7, 2, 10]) == 7
 # than one word of that length, it should return the first instance of that word.
 
 def longest_word(string)
+  array = string.split(" ")
+  array.sort_by!{|x| x.length}[-1]
 end
 
 puts "\nLongest word:\n" + "*" * 15 + "\n"
@@ -116,7 +133,10 @@ puts longest_word("one two three four five six seven") == "three"
 # Assume all letters will be lower case
 
 def count_vowels(string)
+  string.count('aeiouy')
 end
+
+puts count_vowels("cat dog elephant monkey")
 
 puts "\nCount vowels:\n" + "*" * 15 + "\n"
 puts count_vowels("cat dog elephant monkey") == 8
@@ -127,7 +147,18 @@ puts count_vowels("abcdefghijklmnopqrstuvwxyz") == 6
 # with five-letter words replaced with "#####"
 
 def redact_five_letter_words(string)
+  split_string = string.split(" ")
+  ans = []
+  split_string.each do |x|
+    if x.length == 5
+      ans.push('#####')
+    else 
+      ans.push(x)
+    end
+  end
+  ans.join(" ")
 end
+
 
 puts "\nRedact five letter words:\n" + "*" * 15 + "\n"
 puts redact_five_letter_words("one two three four five six seven eight") == "one two ##### four five six ##### #####"
