@@ -2,6 +2,12 @@
 
 # Write a function that given an array, returns another array with each of the numbers multiplied by two. Don't change the original array, make sure you construct a copy!
 def array_times_two(array)
+  new_array = []
+  array.each do |x|
+    new_array << x*2
+  end
+
+  new_array
 end
 
 # Tests — these should all spit out true!
@@ -16,6 +22,7 @@ puts dont_change_this == [3, 4, 5]
 
 # Write a function that given an array, now CHANGES each of the numbers to be twice as big. This should mutate the original array!
 def array_times_two!(array)
+  array = array.map!{ |x| x* 2 } 
 end
 
 # Tests
@@ -29,6 +36,7 @@ puts change_this == [12, 14, 16]
 
 # Write a function that given an array, returns another array of only the unique elements. I.e., return a version without duplicates.
 def uniq(array)
+  array.uniq
 end
 
 # Tests
@@ -44,9 +52,24 @@ puts uniq([1, 2, 1, 3, 3]) == [1, 2, 3]
 # You'll want to write a helper function that helps you determine which numbers are Slippery.
 
 def slippery_numbers(n)
+  array = []
+  count = 3
+  while array.length < n
+    if is_slippery?(count)
+      array.push(count)
+    end
+    count +=1
+  end
+  array
 end
 
 def is_slippery?(number)
+  if number % 15 == 0
+    return false
+  end
+  if number % 3 == 0 || number % 5 == 0 
+    return true
+  end
 end
 
 # Tests
@@ -59,6 +82,16 @@ puts slippery_numbers(7) == [3, 5, 6, 9, 10, 12, 18]
 
 # Write a function that finds whether any two elements in the array sum to 0. If it does, return true; else, return false.
 def two_sum_to_zero?(array)
+  array.each_with_index do |firstNum, index|
+    array.each_with_index do |secondNum, index2|
+      if(index2 > index) 
+        if( array[index] + array[index2] == 0) 
+          return true
+        end
+      end
+    end
+  end
+  false
 end
 
 # Tests
@@ -75,9 +108,23 @@ puts two_sum_to_zero?([0, 5]) == false
 # Reminder: you can convert an integer to a string using #to_s. You can convert a string back to an integer using #to_i.
 
 def magic_numbers(count)
+  array = []
+  currentNum = 7
+  while array.length < count
+    if( is_magic_number?(currentNum) )
+      array.push(currentNum)
+    end
+    currentNum+=1
+  end
+  array
 end
 
 def is_magic_number?(number)
+  count = 0
+  num = number.to_s.split("").each do |x|
+    count = count + x.to_i
+  end
+  return count == 7
 end
 
 # Tests
